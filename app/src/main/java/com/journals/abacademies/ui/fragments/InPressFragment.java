@@ -35,7 +35,7 @@ public class InPressFragment extends Fragment {
     FragmentInPressBinding fragmentInPressBinding;
 
     private static final String TAG = "CategoryFragment";
-    ArrayList<InPressResponse.InpressDetailsBean.ArticlesBean> inpressDetailsBeanArrayList = new ArrayList<>();
+    ArrayList<InPressResponse.InpressDetailsBean> inpressDetailsBeanArrayList = new ArrayList<>();
     InPressViewModel inPressViewModel;
 
     InPressAdapter inPressAdapter;
@@ -94,7 +94,7 @@ public class InPressFragment extends Fragment {
 
 
             if (homeResponse.isStatus()) {
-                List<InPressResponse.InpressDetailsBean.ArticlesBean> inpressDetailsBeanList = homeResponse.getInpressDetails().get(0).getArticles();
+                List<InPressResponse.InpressDetailsBean> inpressDetailsBeanList = homeResponse.getInpressDetails();
 
                 inpressDetailsBeanArrayList.addAll(inpressDetailsBeanList);
 

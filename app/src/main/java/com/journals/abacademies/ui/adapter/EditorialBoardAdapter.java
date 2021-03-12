@@ -27,10 +27,10 @@ import java.util.List;
 
 public class EditorialBoardAdapter extends RecyclerView.Adapter<EditorialBoardAdapter.ViewHolder> {
 
-    List<EditorialBoardResponse.EditorialboardarrBean.EditorsBean> modelList;
+    List<EditorialBoardResponse.EditorialboardarrBean> modelList;
     Context context;
 
-    public EditorialBoardAdapter(List<EditorialBoardResponse.EditorialboardarrBean.EditorsBean> modelList, Context context) {
+    public EditorialBoardAdapter(List<EditorialBoardResponse.EditorialboardarrBean> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
     }
@@ -46,7 +46,7 @@ public class EditorialBoardAdapter extends RecyclerView.Adapter<EditorialBoardAd
     public void onBindViewHolder(@NonNull EditorialBoardAdapter.ViewHolder holder, int position) {
 
 
-        holder.rowItemBinding.txtName.setText(modelList.get(position).getEname());
+        holder.rowItemBinding.txtName.setText(modelList.get(position).getEname()+" "+modelList.get(position).getEditorType());
 
         if (modelList.get(position).getEditorDescription() != null && !modelList.get(position).getEditorDescription().equalsIgnoreCase("null") && !modelList.get(position).getEditorDescription().isEmpty()) {
             holder.rowItemBinding.txtView1.setText(modelList.get(position).getEditorDescription());

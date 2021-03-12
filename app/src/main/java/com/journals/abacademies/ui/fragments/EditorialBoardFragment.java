@@ -27,7 +27,7 @@ import java.util.Objects;
 public class EditorialBoardFragment extends Fragment {
 
 
-    ArrayList<EditorialBoardResponse.EditorialboardarrBean.EditorsBean> editorialboardarrBeanArrayList = new ArrayList<>();
+    ArrayList<EditorialBoardResponse.EditorialboardarrBean> editorialboardarrBeanArrayList = new ArrayList<>();
     EditorialViewModel editorialViewModel;
     FragmentEditorialBoardBinding fragmentEditorialBoardBinding;
     EditorialBoardAdapter editorialBoardAdapter;
@@ -82,7 +82,7 @@ public class EditorialBoardFragment extends Fragment {
 
         // get home data
         editorialViewModel.getEditorialBoardResponseLiveData().observe(getViewLifecycleOwner(), homeResponse -> {
-            List<EditorialBoardResponse.EditorialboardarrBean.EditorsBean> catDetailsBeanList = homeResponse.getEditorialboardarr().get(0).getEditors();
+            List<EditorialBoardResponse.EditorialboardarrBean> catDetailsBeanList = homeResponse.getEditorialboardarr();
             editorialboardarrBeanArrayList.addAll(catDetailsBeanList);
 
             if (editorialboardarrBeanArrayList.size() != 0){

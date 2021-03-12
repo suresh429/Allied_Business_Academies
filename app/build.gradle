@@ -3,6 +3,14 @@ apply plugin: 'com.android.application'
 android {
 
     
+    signingConfigs {
+        release {
+            storeFile file('E:\\Android projects\\Omics Projects\\Allied Business Academies\\jks\\abacademies.jks')
+            storePassword 'abacademies'
+            keyAlias 'abacademies'
+            keyPassword 'abacademies'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion '30.0.2'
 
@@ -14,6 +22,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
 
 
     }

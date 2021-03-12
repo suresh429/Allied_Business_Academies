@@ -29,10 +29,28 @@ public class EditorialBoardResponse {
     }
 
     public static class EditorialboardarrBean {
+        @SerializedName("ename")
+        private String ename;
+        @SerializedName("editor_description")
+        private String editorDescription;
         @SerializedName("editor_type")
         private String editorType;
-        @SerializedName("editors")
-        private List<EditorsBean> editors;
+
+        public String getEname() {
+            return ename;
+        }
+
+        public void setEname(String ename) {
+            this.ename = ename;
+        }
+
+        public String getEditorDescription() {
+            return editorDescription;
+        }
+
+        public void setEditorDescription(String editorDescription) {
+            this.editorDescription = editorDescription;
+        }
 
         public String getEditorType() {
             return editorType;
@@ -40,37 +58,6 @@ public class EditorialBoardResponse {
 
         public void setEditorType(String editorType) {
             this.editorType = editorType;
-        }
-
-        public List<EditorsBean> getEditors() {
-            return editors;
-        }
-
-        public void setEditors(List<EditorsBean> editors) {
-            this.editors = editors;
-        }
-
-        public static class EditorsBean {
-            @SerializedName("ename")
-            private String ename;
-            @SerializedName("editor_description")
-            private String editorDescription;
-
-            public String getEname() {
-                return ename;
-            }
-
-            public void setEname(String ename) {
-                this.ename = ename;
-            }
-
-            public String getEditorDescription() {
-                return editorDescription;
-            }
-
-            public void setEditorDescription(String editorDescription) {
-                this.editorDescription = editorDescription;
-            }
         }
     }
 }

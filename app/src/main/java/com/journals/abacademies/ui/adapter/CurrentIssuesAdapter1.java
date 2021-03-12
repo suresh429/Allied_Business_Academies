@@ -24,10 +24,10 @@ import static com.journals.abacademies.helper.utils.viewInBrowser;
 
 public class CurrentIssuesAdapter1 extends RecyclerView.Adapter<CurrentIssuesAdapter1.ViewHolder> {
 
-    List<CurrentIssueResponse.CurrentissueDetailsBean.ArticlesBean> modelList;
+    List<CurrentIssueResponse.CurrentissueDetailsBean> modelList;
 
     Context context;
-    public CurrentIssuesAdapter1(List<CurrentIssueResponse.CurrentissueDetailsBean.ArticlesBean> modelList,Context context) {
+    public CurrentIssuesAdapter1(List<CurrentIssueResponse.CurrentissueDetailsBean> modelList,Context context) {
         this.modelList = modelList;
         this.context = context;
     }

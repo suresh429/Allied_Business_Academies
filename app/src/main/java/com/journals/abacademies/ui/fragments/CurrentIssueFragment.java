@@ -30,7 +30,7 @@ public class CurrentIssueFragment extends Fragment {
 
     FragmentCurrentIssueBinding fragmentCurrentIssueBinding;
     private static final String TAG = "CategoryFragment";
-    ArrayList<CurrentIssueResponse.CurrentissueDetailsBean.ArticlesBean> currentissueDetailsBeanArrayList = new ArrayList<>();
+    ArrayList<CurrentIssueResponse.CurrentissueDetailsBean> currentissueDetailsBeanArrayList = new ArrayList<>();
     CurrentIssueViewModel currentIssueViewModel;
 
     CurrentIssuesAdapter1 currentIssuesAdapter1;
@@ -84,7 +84,7 @@ public class CurrentIssueFragment extends Fragment {
 
 
             if (homeResponse.isStatus()) {
-                List<CurrentIssueResponse.CurrentissueDetailsBean.ArticlesBean> catDetailsBeanList = homeResponse.getCurrentissueDetails().get(0).getArticles();
+                List<CurrentIssueResponse.CurrentissueDetailsBean> catDetailsBeanList = homeResponse.getCurrentissueDetails();
 
                 currentissueDetailsBeanArrayList.addAll(catDetailsBeanList);
 

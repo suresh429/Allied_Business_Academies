@@ -31,10 +31,10 @@ import static com.journals.abacademies.helper.utils.viewInBrowser;
 
 public class InPressAdapter extends RecyclerView.Adapter<InPressAdapter.ViewHolder> {
 
-    List<InPressResponse.InpressDetailsBean.ArticlesBean> modelList;
+    List<InPressResponse.InpressDetailsBean> modelList;
     private static final String TAG = "InPressAdapter";
     Context context;
-    public InPressAdapter(List<InPressResponse.InpressDetailsBean.ArticlesBean> modelList,Context context) {
+    public InPressAdapter(List<InPressResponse.InpressDetailsBean> modelList,Context context) {
         this.modelList = modelList;
         this.context = context;
     }
@@ -96,7 +96,7 @@ public class InPressAdapter extends RecyclerView.Adapter<InPressAdapter.ViewHold
             @Override
             public void onClick(View v) {
 
-                viewInBrowser(context,"https://www.abacademies.org/articles/"+modelList.get(position).getFulltextlink(),"Not Found");
+                viewInBrowser(context,modelList.get(position).getFulltextlink(),"Not Found");
             }
         });
 
