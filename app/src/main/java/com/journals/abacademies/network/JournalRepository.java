@@ -11,11 +11,11 @@ import com.journals.abacademies.model.CategoryResponse;
 import com.journals.abacademies.model.ContactResponse;
 import com.journals.abacademies.model.CurrentIssueResponse;
 import com.journals.abacademies.model.EditorialBoardResponse;
+import com.journals.abacademies.model.HomeResponse;
 import com.journals.abacademies.model.InPressResponse;
 import com.journals.abacademies.model.JournalHomeResponse;
 import com.journals.abacademies.model.JournalsListResponse;
 import com.journals.abacademies.model.VolumeIssueResponse;
-
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,7 +55,37 @@ public class JournalRepository {
 
 
 
+    // getting home data response
+    public MutableLiveData<HomeResponse> getHomeData(JsonObject jsonObject) {
+        progressbarObservable.setValue(true);
+        MutableLiveData<HomeResponse> homeData = new MutableLiveData<>();
+        newsApi.getHomeList(jsonObject).enqueue(new Callback<HomeResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<HomeResponse> call, @NotNull Response<HomeResponse> response) {
+                if (response.isSuccessful()) {
+                    progressbarObservable.setValue(false);
+                    homeData.setValue(response.body());
+                } else {
+                    progressbarObservable.setValue(false);
+                    toastMessageObserver.setValue("Something unexpected happened to our request: " + response.message()); // Whenever you want to show toast use setValue.
 
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<HomeResponse> call, @NotNull Throwable t) {
+                if (t instanceof NoConnectivityException) {
+                    // show No Connectivity message to user or do whatever you want.
+                    toastMessageObserver.setValue(t.getMessage());
+                    // Whenever you want to show toast use setValue.
+
+                }
+                // homeData.setValue(null);
+                progressbarObservable.setValue(false);
+            }
+        });
+        return homeData;
+    }
     //getting category data response
     public MutableLiveData<CategoryResponse> getCategoryData(JsonObject jsonObject) {
         progressbarObservable.setValue(true);

@@ -7,6 +7,7 @@ import com.journals.abacademies.model.CategoryResponse;
 import com.journals.abacademies.model.ContactResponse;
 import com.journals.abacademies.model.CurrentIssueResponse;
 import com.journals.abacademies.model.EditorialBoardResponse;
+import com.journals.abacademies.model.HomeResponse;
 import com.journals.abacademies.model.InPressResponse;
 import com.journals.abacademies.model.JournalHomeResponse;
 import com.journals.abacademies.model.JournalsListResponse;
@@ -20,6 +21,10 @@ import retrofit2.http.POST;
 public interface Api {
 
 
+
+    @Headers("Content-Type: application/json")
+    @POST("homeapi.php")
+    Call<HomeResponse> getHomeList(@Body JsonObject jsonObject);
 
     @Headers("Content-Type: application/json")
     @POST("journalslistapi.php")

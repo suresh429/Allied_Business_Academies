@@ -1,6 +1,5 @@
 package com.journals.abacademies.ui.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,13 +9,13 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.journals.abacademies.databinding.FragmentCategoryBinding;
-import com.journals.abacademies.helper.utils;
 import com.journals.abacademies.model.CategoryResponse;
+import com.journals.abacademies.model.HomeResponse;
 import com.journals.abacademies.ui.adapter.CategoryListAdapter;
+import com.journals.abacademies.ui.adapter.CurrentIssuesAdapter;
 import com.journals.abacademies.ui.viewmodel.CategoryViewModel;
-
+import com.journals.abacademies.ui.viewmodel.HomeViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,9 +32,12 @@ public class CategoryFragment extends Fragment {
 
     FragmentCategoryBinding fragmentCategoryBinding;
     ArrayList<CategoryResponse.JournalDetailsBean> subcatDetailsBeanArrayList = new ArrayList<>();
+    ArrayList<HomeResponse.CurrissueHighlightsBean> currissueHighlightsBeanArrayList = new ArrayList<>();
     CategoryViewModel categoryViewModel;
+    HomeViewModel homeViewModel;
 
     CategoryListAdapter categoryListAdapter;
+    CurrentIssuesAdapter currentIssuesAdapter;
 
 
     public CategoryFragment() {
@@ -50,27 +52,37 @@ public class CategoryFragment extends Fragment {
 
 
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         categoryViewModel.init("1",requireActivity());
+        homeViewModel.init("1",requireActivity());
 
         // progress bar
         categoryViewModel.getProgressbarObservable().observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean){
                 fragmentCategoryBinding.progressBar.setVisibility(View.VISIBLE);
-
+                fragmentCategoryBinding.txtJournalName.setVisibility(View.GONE);
+                fragmentCategoryBinding.txtCurrentIssueName.setVisibility(View.GONE);
             }else {
                 fragmentCategoryBinding.progressBar.setVisibility(View.GONE);
+                fragmentCategoryBinding.txtJournalName.setVisibility(View.VISIBLE);
+                fragmentCategoryBinding.txtCurrentIssueName.setVisibility(View.VISIBLE);
             }
         });
 
-        // Alert toast msg
-        categoryViewModel.getToastObserver().observe(getViewLifecycleOwner(), message -> {
-            Snackbar snackbar = Snackbar.make(fragmentCategoryBinding.getRoot().getRootView(), message, Snackbar.LENGTH_LONG);
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.BLACK);
-            snackbar.show();
-
-            utils.noNetworkAlert(getActivity(),message);
+        // progress bar
+        homeViewModel.getProgressbarObservable().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean){
+                fragmentCategoryBinding.progressBar.setVisibility(View.VISIBLE);
+                fragmentCategoryBinding.txtJournalName.setVisibility(View.GONE);
+                fragmentCategoryBinding.txtCurrentIssueName.setVisibility(View.GONE);
+            }else {
+                fragmentCategoryBinding.progressBar.setVisibility(View.GONE);
+                fragmentCategoryBinding.txtJournalName.setVisibility(View.VISIBLE);
+                fragmentCategoryBinding.txtCurrentIssueName.setVisibility(View.VISIBLE);
+            }
         });
+
+
 
         // get home data
         categoryViewModel.getCategoryRepository().observe(getViewLifecycleOwner(), homeResponse -> {
@@ -97,6 +109,31 @@ public class CategoryFragment extends Fragment {
 
         });
 
+
+        // get home data
+        homeViewModel.getHomeRepository().observe(getViewLifecycleOwner(), homeResponse -> {
+
+
+            if (homeResponse != null){
+                List<HomeResponse.CurrissueHighlightsBean> catDetailsBeanList = homeResponse.getCurrissue_highlights();
+
+                currissueHighlightsBeanArrayList.addAll(catDetailsBeanList);
+
+                currentIssuesAdapter = new CurrentIssuesAdapter(catDetailsBeanList, getActivity());
+                fragmentCategoryBinding.recyclerHomeCurrentIssue.setAdapter(currentIssuesAdapter);
+
+                fragmentCategoryBinding.progressBar.setVisibility(View.GONE);
+
+                currentIssuesAdapter.notifyDataSetChanged();
+                fragmentCategoryBinding.txtEmptyView.setVisibility(View.GONE);
+                Log.d(TAG, "onCreateView: "+" data found"+catDetailsBeanList.size());
+            }else {
+                Log.d(TAG, "onCreateView: "+"NO data");
+                fragmentCategoryBinding.recyclerHomeCurrentIssue.setVisibility(View.GONE);
+                fragmentCategoryBinding.txtEmptyView.setVisibility(View.VISIBLE);
+            }
+
+        });
 
 
         return fragmentCategoryBinding.getRoot();
